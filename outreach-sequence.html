@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>North Shore Outreach Sequence — Tritower Financial</title>
+  <style>
+    :root {
+      --navy: #1B3A6B;
+      --gold: #B8860B;
+      --gold-light: #D4A017;
+      --midblue: #2C5F8A;
+      --ltblue: #D6E4F0;
+      --bg: #F4F7FB;
+      --white: #FFFFFF;
+      --text: #1A1A2E;
+      --muted: #5A6A7A;
+      --border: #CBD5E1;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Georgia', serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* Header */
+    .header {
+      background: var(--navy);
+      padding: 0 0 0 0;
+    }
+    .header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 48px;
+      border-bottom: 3px solid var(--gold);
+    }
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .header-logo {
+      width: 44px;
+      height: 44px;
+      background: var(--gold);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--navy);
+      font-family: sans-serif;
+      letter-spacing: -1px;
+    }
+    .header-title {
+      color: var(--white);
+      font-size: 20px;
+      font-weight: normal;
+      letter-spacing: 0.5px;
+    }
+    .header-title span {
+      color: var(--gold-light);
+      font-weight: bold;
+    }
+    .header-badge {
+      background: rgba(184,134,11,0.2);
+      border: 1px solid var(--gold);
+      color: var(--gold-light);
+      font-family: sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .header-sub {
+      padding: 14px 48px;
+      background: rgba(0,0,0,0.2);
+    }
+    .header-sub p {
+      color: rgba(255,255,255,0.7);
+      font-family: sans-serif;
+      font-size: 13px;
+    }
+    .header-sub strong { color: rgba(255,255,255,0.9); }
+
+    /* Nav breadcrumb */
+    .breadcrumb {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 48px;
+      font-family: sans-serif;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .breadcrumb a {
+      color: var(--midblue);
+      text-decoration: none;
+    }
+    .breadcrumb a:hover { text-decoration: underline; }
+
+    /* Main */
+    main {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    /* Intro card */
+    .intro-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-left: 5px solid var(--gold);
+      border-radius: 8px;
+      padding: 28px 32px;
+      margin-bottom: 36px;
+    }
+    .intro-card h1 {
+      font-size: 22px;
+      color: var(--navy);
+      margin-bottom: 10px;
+    }
+    .intro-card p {
+      color: var(--muted);
+      font-family: sans-serif;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+    .intro-card .meta-row {
+      display: flex;
+      gap: 24px;
+      margin-top: 18px;
+      flex-wrap: wrap;
+    }
+    .meta-item {
+      font-family: sans-serif;
+      font-size: 12px;
+    }
+    .meta-item .label {
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 2px;
+    }
+    .meta-item .value {
+      color: var(--navy);
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    /* Strategy bar */
+    .strategy-bar {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 36px;
+      flex-wrap: wrap;
+    }
+    .strategy-step {
+      flex: 1;
+      min-width: 160px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .step-num {
+      width: 32px;
+      height: 32px;
+      background: var(--navy);
+      color: var(--white);
+      border-radius: 50%;
+      font-family: sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .step-info h3 {
+      font-family: sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 3px;
+    }
+    .step-info p {
+      font-family: sans-serif;
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    /* Lead pills */
+    .target-section {
+      background: var(--ltblue);
+      border: 1px solid #A8C4DC;
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin-bottom: 36px;
+    }
+    .target-section h2 {
+      font-family: sans-serif;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--midblue);
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+    .lead-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .lead-pill {
+      background: var(--white);
+      border: 1px solid #A8C4DC;
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-family: sans-serif;
+      font-size: 12px;
+      color: var(--navy);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .lead-pill .firm {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    /* Email cards */
+    .email-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .email-num {
+      background: var(--navy);
+      color: var(--gold-light);
+      font-family: sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .email-timing {
+      font-family: sans-serif;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .email-timing strong { color: var(--text); }
+
+    .email-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 32px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .email-card-header {
+      background: var(--navy);
+      padding: 16px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .email-card-header h2 {
+      color: var(--white);
+      font-size: 16px;
+      font-weight: normal;
+      font-style: italic;
+    }
+    .email-card-header .strategy-tag {
+      background: rgba(184,134,11,0.25);
+      border: 1px solid var(--gold);
+      color: var(--gold-light);
+      font-family: sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .email-meta {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 8px 16px;
+      padding: 18px 28px;
+      border-bottom: 1px solid var(--border);
+      background: #FAFBFD;
+      font-family: sans-serif;
+      font-size: 13px;
+    }
+    .email-meta .field-label {
+      color: var(--muted);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .email-meta .field-value {
+      color: var(--text);
+    }
+
+    .email-body {
+      padding: 28px 32px;
+      line-height: 1.85;
+      font-size: 15px;
+      color: var(--text);
+    }
+    .email-body p {
+      margin-bottom: 16px;
+    }
+    .email-body p:last-child { margin-bottom: 0; }
+    .email-body .highlight {
+      color: var(--navy);
+      font-weight: 600;
+    }
+
+    .email-footer {
+      border-top: 1px solid var(--border);
+      padding: 16px 28px;
+      background: #FAFBFD;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: gap;
+      gap: 12px;
+    }
+    .email-footer .sig {
+      font-family: sans-serif;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .email-footer .sig strong {
+      color: var(--navy);
+      font-size: 13px;
+    }
+    .notes-box {
+      background: rgba(184,134,11,0.08);
+      border: 1px solid rgba(184,134,11,0.3);
+      border-radius: 6px;
+      padding: 10px 16px;
+      font-family: sans-serif;
+      font-size: 12px;
+      color: #7A5800;
+      max-width: 340px;
+    }
+    .notes-box strong {
+      display: block;
+      margin-bottom: 3px;
+      font-weight: 700;
+    }
+
+    /* Personalization guide */
+    .personalization-section {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+    .personalization-header {
+      background: var(--midblue);
+      padding: 14px 24px;
+      font-family: sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--white);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+    .personalization-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+    .person-row {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .person-row:nth-child(even) { background: #FAFBFD; }
+    .person-row .person-name {
+      font-family: sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--navy);
+      min-width: 160px;
+    }
+    .person-row .person-line {
+      font-family: sans-serif;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .person-row .person-line em {
+      color: var(--text);
+      font-style: normal;
+      font-weight: 600;
+    }
+
+    /* Footer */
+    .page-footer {
+      text-align: center;
+      padding: 32px 24px;
+      font-family: sans-serif;
+      font-size: 12px;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      margin-top: 60px;
+    }
+    .page-footer a {
+      color: var(--midblue);
+      text-decoration: none;
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: sans-serif;
+      font-size: 13px;
+      color: var(--midblue);
+      text-decoration: none;
+      margin-bottom: 32px;
+    }
+    .back-link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <div class="header-brand">
+      <div class="header-logo">T</div>
+      <div class="header-title"><span>Tritower</span> Financial Group &nbsp;·&nbsp; Outreach Sequence</div>
+    </div>
+    <div class="header-badge">Fructify Kit Preview</div>
+  </div>
+  <div class="header-sub">
+    <p>Generated for <strong>Patrick M. Gorman, Jr.</strong> &nbsp;·&nbsp; Partner &amp; President, Tritower Real Estate Capital &nbsp;·&nbsp; North Shore Advisor Referral Campaign</p>
+  </div>
+</div>
+
+<div class="breadcrumb">
+  <a href="index.html">← Kit Overview</a> &nbsp;/&nbsp; Outreach Sequence
+</div>
+
+<main>
+
+  <div class="intro-card">
+    <h1>North Shore Advisor Outreach — 3-Email Sequence</h1>
+    <p>This sequence is written from Patrick's voice, targeting independent RIA principals and wealth advisors on Boston's North Shore who manage HNW and accredited investor clients. Each email references the specific firm and contact — Claude auto-personalizes from your lead list. The goal: a 15-minute intro call to explore whether Tritower's single-asset REIT structures fit their clients' alternatives allocation.</p>
+    <div class="meta-row">
+      <div class="meta-item"><span class="label">Sequence Length</span><span class="value">3 emails over 12 days</span></div>
+      <div class="meta-item"><span class="label">Target Geography</span><span class="value">North Shore, MA</span></div>
+      <div class="meta-item"><span class="label">Lead Count</span><span class="value">10 verified contacts</span></div>
+      <div class="meta-item"><span class="label">Sender</span><span class="value">Patrick M. Gorman, Jr.</span></div>
+      <div class="meta-item"><span class="label">Platform</span><span class="value">Apollo / Outlook / Manual</span></div>
+    </div>
+  </div>
+
+  <div class="strategy-bar">
+    <div class="strategy-step">
+      <div class="step-num">1</div>
+      <div class="step-info">
+        <h3>Day 1 — Cold Intro</h3>
+        <p>Lead with Tritower's track record. One ask: 15 minutes.</p>
+      </div>
+    </div>
+    <div class="strategy-step">
+      <div class="step-num">2</div>
+      <div class="step-info">
+        <h3>Day 5 — Value Add</h3>
+        <p>Share a specific insight relevant to their clients. Demonstrate expertise.</p>
+      </div>
+    </div>
+    <div class="strategy-step">
+      <div class="step-num">3</div>
+      <div class="step-info">
+        <h3>Day 12 — Soft Close</h3>
+        <p>Light touch, easy to respond to. Keep the door open long-term.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="target-section">
+    <h2>Target Contacts — North Shore Lead List</h2>
+    <div class="lead-pills">
+      <div class="lead-pill">Greg Stevens <span class="firm">· Cabot Wealth</span></div>
+      <div class="lead-pill">Jim Gasparello <span class="firm">· Cabot Wealth</span></div>
+      <div class="lead-pill">Sonia Ernst <span class="firm">· Cabot Wealth</span></div>
+      <div class="lead-pill">Tyler Swaim <span class="firm">· Cabot Wealth</span></div>
+      <div class="lead-pill">Craig Goryl <span class="firm">· Cabot Wealth</span></div>
+      <div class="lead-pill">Tom Manning <span class="firm">· F.L. Putnam</span></div>
+      <div class="lead-pill">Glen Martin <span class="firm">· F.L. Putnam</span></div>
+      <div class="lead-pill">Joni Stone <span class="firm">· F.L. Putnam</span></div>
+      <div class="lead-pill">Thomas Fay <span class="firm">· F.L. Putnam</span></div>
+      <div class="lead-pill">Marcel Quiroga <span class="firm">· TQM Wealth</span></div>
+    </div>
+  </div>
+
+  <!-- EMAIL 1 -->
+  <div class="email-label">
+    <span class="email-num">Email 1 of 3</span>
+    <span class="email-timing">Send on <strong>Day 1</strong> &nbsp;·&nbsp; Strategy: Cold intro, track record, single ask</span>
+  </div>
+  <div class="email-card">
+    <div class="email-card-header">
+      <h2>"A quick intro from Tritower — real estate that actually fits alternatives allocations"</h2>
+      <span class="strategy-tag">Cold Intro</span>
+    </div>
+    <div class="email-meta">
+      <span class="field-label">To:</span>
+      <span class="field-value">[First Name] &lt;[email]&gt;</span>
+      <span class="field-label">Subject:</span>
+      <span class="field-value">Real estate exposure without the complexity — quick intro from Tritower</span>
+      <span class="field-label">From:</span>
+      <span class="field-value">Patrick Gorman &lt;pgorman@tritowerfinancial.com&gt;</span>
+    </div>
+    <div class="email-body">
+      <p>[First Name],</p>
+      <p>I'll keep this short — I know you're not short on inbound.</p>
+      <p>I'm Patrick Gorman, Partner at <span class="highlight">Tritower Financial Group</span> in Boston. We build single-asset REIT structures for accredited investors — NNN-leased commercial properties, fully transparent, with the tax efficiency of a REIT and none of the correlation mess of a fund-of-funds.</p>
+      <p>We've raised <span class="highlight">$577M across 60 properties</span>, and increasingly I'm finding that independent advisors on the North Shore are exactly the right fit for what we do — clients who want real assets, real income, and a clear story to tell.</p>
+      <p>I noticed [FIRM_NAME] focuses on HNW and multi-generational wealth. The advisors I work with most successfully are the ones whose clients are already asking about alternatives but don't want the illiquidity opacity of a blind pool.</p>
+      <p>Worth a 15-minute call to see if there's overlap? I'm not asking you to recommend anything — just a conversation between two people in the same market.</p>
+      <p>Happy to work around your schedule.</p>
+    </div>
+    <div class="email-footer">
+      <div class="sig">
+        <strong>Patrick M. Gorman, Jr.</strong><br>
+        Partner &amp; President, Tritower Real Estate Capital<br>
+        Tritower Financial Group &nbsp;·&nbsp; Boston, MA<br>
+        pgorman@tritowerfinancial.com
+      </div>
+      <div class="notes-box">
+        <strong>🤖 Claude Auto-Personalizes:</strong>
+        Swaps [FIRM_NAME] with the contact's actual firm. Adjusts the "I noticed" line based on the firm's stated focus pulled from Apollo enrichment.
+      </div>
+    </div>
+  </div>
+
+  <!-- EMAIL 2 -->
+  <div class="email-label">
+    <span class="email-num">Email 2 of 3</span>
+    <span class="email-timing">Send on <strong>Day 5</strong> &nbsp;·&nbsp; Strategy: Value-add, demonstrate expertise, low pressure</span>
+  </div>
+  <div class="email-card">
+    <div class="email-card-header">
+      <h2>"One thing your clients are probably asking that we've solved"</h2>
+      <span class="strategy-tag">Value Add</span>
+    </div>
+    <div class="email-meta">
+      <span class="field-label">To:</span>
+      <span class="field-value">[First Name] &lt;[email]&gt;</span>
+      <span class="field-label">Subject:</span>
+      <span class="field-value">Re: Real estate exposure without the complexity</span>
+      <span class="field-label">From:</span>
+      <span class="field-value">Patrick Gorman &lt;pgorman@tritowerfinancial.com&gt;</span>
+    </div>
+    <div class="email-body">
+      <p>[First Name],</p>
+      <p>Following up in case my earlier note got buried.</p>
+      <p>Something I keep hearing from advisors up here: their clients want commercial real estate exposure — not residential, not REITs that trade like stocks, and definitely not something they have to explain with a 40-page PPM. They want something that feels like <span class="highlight">ownership of a real building</span>.</p>
+      <p>That's exactly what we built. Each Tritower offering is a single property — a specific building, a specific tenant, a specific lease. The investor knows what they own. The 1099 looks like real estate income. The depreciation flows through. There's no blind pool risk.</p>
+      <p>For advisors, the value is different: it's a conversation piece. "We can put 5% into a NNN-leased commercial property in [city]" lands differently than "we have 5% in alternatives."</p>
+      <p>I put together a quick two-pager on our structure if you'd find it useful — no strings. Or if a call is easier, I'm flexible all next week.</p>
+    </div>
+    <div class="email-footer">
+      <div class="sig">
+        <strong>Patrick M. Gorman, Jr.</strong><br>
+        Partner &amp; President, Tritower Real Estate Capital<br>
+        pgorman@tritowerfinancial.com &nbsp;·&nbsp; tritowerfinancial.com
+      </div>
+      <div class="notes-box">
+        <strong>🤖 Claude Tip:</strong>
+        If you have a recent deal in a city near the contact's home market, Claude can swap in that specific city to make this hyper-local and credible.
+      </div>
+    </div>
+  </div>
+
+  <!-- EMAIL 3 -->
+  <div class="email-label">
+    <span class="email-num">Email 3 of 3</span>
+    <span class="email-timing">Send on <strong>Day 12</strong> &nbsp;·&nbsp; Strategy: Soft close, keep door open, no hard sell</span>
+  </div>
+  <div class="email-card">
+    <div class="email-card-header">
+      <h2>"Last note — happy to connect whenever the timing is right"</h2>
+      <span class="strategy-tag">Soft Close</span>
+    </div>
+    <div class="email-meta">
+      <span class="field-label">To:</span>
+      <span class="field-value">[First Name] &lt;[email]&gt;</span>
+      <span class="field-label">Subject:</span>
+      <span class="field-value">Closing the loop — Tritower / [FIRM_NAME]</span>
+      <span class="field-label">From:</span>
+      <span class="field-value">Patrick Gorman &lt;pgorman@tritowerfinancial.com&gt;</span>
+    </div>
+    <div class="email-body">
+      <p>[First Name],</p>
+      <p>I'll make this my last note for now — I don't want to be noise in an already full inbox.</p>
+      <p>If Tritower's single-asset REIT model ever becomes relevant for your practice — whether a client is asking about alternatives, you're looking at real estate as part of an income strategy, or you just want to understand how we're structured — I'd genuinely enjoy the conversation.</p>
+      <p>We're Boston-based, we know this market, and we work with a small number of advisors who want a real relationship, not a product pitch. If that sounds like it could be you at some point, <span class="highlight">feel free to reach out whenever the timing is right</span>.</p>
+      <p>No action needed on your end — just wanted to leave the door open.</p>
+      <p>Best,</p>
+    </div>
+    <div class="email-footer">
+      <div class="sig">
+        <strong>Patrick M. Gorman, Jr.</strong><br>
+        Partner &amp; President, Tritower Real Estate Capital<br>
+        Tritower Financial Group &nbsp;·&nbsp; Boston, MA<br>
+        pgorman@tritowerfinancial.com
+      </div>
+      <div class="notes-box">
+        <strong>🤖 Claude Note:</strong>
+        This email intentionally has no CTA — the goal is to preserve goodwill and leave a clean exit. Future outreach in 90 days can restart the sequence with a new hook (new offering, market event, etc.).
+      </div>
+    </div>
+  </div>
+
+  <!-- Personalization guide -->
+  <div class="personalization-section">
+    <div class="personalization-header">Per-Contact Personalization Lines — Email 1</div>
+    <div class="personalization-grid">
+      <div class="person-row">
+        <div class="person-name">Greg Stevens<br><span style="color:var(--muted);font-weight:normal;font-size:11px">Cabot Wealth, Beverly</span></div>
+        <div class="person-line">"I noticed Cabot has been growing its HNW client base — <em>the kind of families who want real asset ownership, not just exposure.</em>"</div>
+      </div>
+      <div class="person-row">
+        <div class="person-name">Tom Manning<br><span style="color:var(--muted);font-weight:normal;font-size:11px">F.L. Putnam, Lynnfield</span></div>
+        <div class="person-line">"F.L. Putnam's institutional discipline is something we share — <em>we don't do blind pools for the same reason you don't do opaque active funds.</em>"</div>
+      </div>
+      <div class="person-row">
+        <div class="person-name">Marcel Quiroga<br><span style="color:var(--muted);font-weight:normal;font-size:11px">TQM Wealth, Marblehead</span></div>
+        <div class="person-line">"TQM's focus on independent wealth planning aligns with how we work — <em>advisors who can recommend outside their platform's product list.</em>"</div>
+      </div>
+      <div class="person-row">
+        <div class="person-name">Sonia Ernst<br><span style="color:var(--muted);font-weight:normal;font-size:11px">Cabot Wealth, Salem</span></div>
+        <div class="person-line">"Managing partner relationships are often where our best conversations start — <em>you see the full picture of where clients want to go.</em>"</div>
+      </div>
+      <div class="person-row">
+        <div class="person-name">Jim Gasparello<br><span style="color:var(--muted);font-weight:normal;font-size:11px">Cabot Wealth, Salem</span></div>
+        <div class="person-line">"Your BD role puts you exactly at the intersection of new client relationships and portfolio conversations — <em>that's where Tritower tends to land.</em>"</div>
+      </div>
+      <div class="person-row">
+        <div class="person-name">Thomas Fay, CFA<br><span style="color:var(--muted);font-weight:normal;font-size:11px">F.L. Putnam, Lynnfield</span></div>
+        <div class="person-line">"Running private client group at F.L. Putnam, you've seen what clients ask for that standard allocations can't deliver — <em>that's usually where we come in.</em>"</div>
+      </div>
+      <div class="person-row">
+        <div class="person-name">Glen Martin<br><span style="color:var(--muted);font-weight:normal;font-size:11px">F.L. Putnam</span></div>
+        <div class="person-line">"Client advisory directors like you are usually the first to hear 'what else can we do with this capital' — <em>we try to be the answer to that.</em>"</div>
+      </div>
+      <div class="person-row">
+        <div class="person-name">Joni Stone<br><span style="color:var(--muted);font-weight:normal;font-size:11px">F.L. Putnam</span></div>
+        <div class="person-line">"Business development and wealth advising together means you control both ends of the relationship — <em>we work well with advisors who own the whole client.</em>"</div>
+      </div>
+      <div class="person-row">
+        <div class="person-name">Tyler Swaim<br><span style="color:var(--muted);font-weight:normal;font-size:11px">Cabot Wealth</span></div>
+        <div class="person-line">"ChFC and CRPC credentials tell me your clients are planning-first — <em>Tritower fits that mindset better than most alternatives.</em>"</div>
+      </div>
+      <div class="person-row">
+        <div class="person-name">Craig Goryl<br><span style="color:var(--muted);font-weight:normal;font-size:11px">Cabot Wealth</span></div>
+        <div class="person-line">"As CIO you're thinking about how real estate fits the overall allocation model — <em>happy to talk structure and how we approach concentration risk.</em>"</div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<div class="page-footer">
+  Prepared by <strong>Fructify LLC</strong> as a Cowork Kit preview for Patrick M. Gorman, Jr. &nbsp;·&nbsp; <a href="mailto:smilbury@fructifyme.com">smilbury@fructifyme.com</a><br>
+  This sequence is ready to load into Apollo, Outlook, or any outreach platform. Claude personalizes each email automatically from your lead list.
+</div>
+
+</body>
+</html>

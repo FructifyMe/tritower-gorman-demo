@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Investment Structure Overview — Tritower Financial</title>
+  <style>
+    :root {
+      --navy: #1B3A6B;
+      --gold: #B8860B;
+      --gold-light: #D4A017;
+      --midblue: #2C5F8A;
+      --ltblue: #D6E4F0;
+      --bg: #F4F7FB;
+      --white: #FFFFFF;
+      --text: #1A1A2E;
+      --muted: #5A6A7A;
+      --border: #CBD5E1;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Georgia', serif; background: var(--bg); color: var(--text); }
+
+    /* Print-friendly one-pager feel */
+    .page-wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--white);
+      min-height: 100vh;
+    }
+
+    /* Header */
+    .doc-header {
+      background: var(--navy);
+      padding: 32px 48px 24px;
+      border-bottom: 4px solid var(--gold);
+    }
+    .doc-header-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .doc-logo-block { display: flex; align-items: center; gap: 16px; }
+    .doc-logo {
+      width: 52px; height: 52px; background: var(--gold); border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px; font-weight: 700; color: var(--navy); font-family: sans-serif;
+    }
+    .doc-brand h1 { color: var(--white); font-size: 22px; font-weight: normal; }
+    .doc-brand p { color: rgba(255,255,255,0.65); font-family: sans-serif; font-size: 12px; margin-top: 3px; }
+    .doc-badge {
+      background: rgba(184,134,11,0.2);
+      border: 1px solid var(--gold);
+      color: var(--gold-light);
+      font-family: sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 20px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .doc-headline {
+      color: var(--white);
+      font-size: 30px;
+      font-style: italic;
+      letter-spacing: -0.5px;
+      line-height: 1.25;
+      margin-bottom: 6px;
+    }
+    .doc-subhead {
+      color: var(--gold-light);
+      font-family: sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.5px;
+    }
+
+    /* Breadcrumb */
+    .breadcrumb {
+      background: #F0F4F8;
+      border-bottom: 1px solid var(--border);
+      padding: 10px 48px;
+      font-family: sans-serif;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .breadcrumb a { color: var(--midblue); text-decoration: none; }
+
+    /* Stats bar */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-bottom: 1px solid var(--border);
+    }
+    .stat-cell {
+      padding: 20px 28px;
+      border-right: 1px solid var(--border);
+      text-align: center;
+    }
+    .stat-cell:last-child { border-right: none; }
+    .stat-num {
+      font-size: 28px;
+      color: var(--navy);
+      font-weight: bold;
+      letter-spacing: -1px;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .stat-num span { color: var(--gold); }
+    .stat-label {
+      font-family: sans-serif;
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    /* Two-column layout */
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+    .content-col {
+      padding: 36px 40px;
+      border-right: 1px solid var(--border);
+    }
+    .content-col:last-child { border-right: none; }
+
+    .section-label {
+      font-family: sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--gold);
+      margin-bottom: 14px;
+    }
+    .content-col h2 {
+      font-size: 19px;
+      color: var(--navy);
+      margin-bottom: 14px;
+      line-height: 1.3;
+    }
+    .content-col p {
+      font-size: 14px;
+      line-height: 1.8;
+      color: var(--text);
+      margin-bottom: 14px;
+    }
+    .content-col p:last-child { margin-bottom: 0; }
+
+    /* How it works steps */
+    .steps-list { list-style: none; }
+    .steps-list li {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 18px;
+      align-items: flex-start;
+    }
+    .step-circle {
+      width: 28px;
+      height: 28px;
+      background: var(--navy);
+      color: var(--white);
+      border-radius: 50%;
+      font-family: sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .step-text strong {
+      display: block;
+      font-family: sans-serif;
+      font-size: 13px;
+      color: var(--navy);
+      margin-bottom: 2px;
+    }
+    .step-text span {
+      font-family: sans-serif;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* Full-width sections */
+    .full-section {
+      padding: 32px 40px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* Comparison table */
+    .compare-table { width: 100%; border-collapse: collapse; font-family: sans-serif; font-size: 13px; }
+    .compare-table th {
+      background: var(--navy);
+      color: var(--white);
+      padding: 12px 16px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 12px;
+    }
+    .compare-table th:first-child { border-radius: 0; }
+    .compare-table td {
+      padding: 11px 16px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    .compare-table tr:nth-child(even) td { background: #FAFBFD; }
+    .compare-table tr:last-child td { border-bottom: none; }
+    .compare-table td:first-child { font-weight: 600; color: var(--navy); }
+    .check { color: #1A7A4A; font-weight: 700; }
+    .cross { color: #A31515; font-weight: 700; }
+    .neutral { color: var(--muted); }
+
+    /* Advisor value props */
+    .advisor-props {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .prop-card {
+      background: var(--ltblue);
+      border: 1px solid #A8C4DC;
+      border-radius: 8px;
+      padding: 20px;
+    }
+    .prop-card .prop-icon { font-size: 24px; margin-bottom: 10px; }
+    .prop-card h3 { font-family: sans-serif; font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+    .prop-card p { font-family: sans-serif; font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+    /* Sample deal */
+    .sample-deal {
+      background: var(--navy);
+      border-radius: 10px;
+      padding: 28px 32px;
+      margin-top: 0;
+    }
+    .sample-deal h3 {
+      color: var(--gold-light);
+      font-family: sans-serif;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      margin-bottom: 16px;
+    }
+    .deal-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    .deal-attr .dl { color: rgba(255,255,255,0.5); font-family: sans-serif; font-size: 11px; margin-bottom: 2px; }
+    .deal-attr .dv { color: var(--white); font-family: sans-serif; font-size: 14px; font-weight: 600; }
+    .deal-attr .dv.gold { color: var(--gold-light); font-size: 20px; }
+    .deal-disclaimer {
+      color: rgba(255,255,255,0.4);
+      font-family: sans-serif;
+      font-size: 10px;
+      font-style: italic;
+      line-height: 1.5;
+    }
+
+    /* CTA */
+    .cta-section {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--midblue) 100%);
+      padding: 36px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .cta-text h2 {
+      color: var(--white);
+      font-size: 20px;
+      margin-bottom: 6px;
+    }
+    .cta-text p {
+      color: rgba(255,255,255,0.7);
+      font-family: sans-serif;
+      font-size: 13px;
+    }
+    .cta-contact {
+      text-align: right;
+    }
+    .cta-contact .name {
+      color: var(--gold-light);
+      font-size: 16px;
+      font-weight: bold;
+      display: block;
+      margin-bottom: 4px;
+    }
+    .cta-contact .role {
+      color: rgba(255,255,255,0.7);
+      font-family: sans-serif;
+      font-size: 12px;
+      display: block;
+      margin-bottom: 8px;
+    }
+    .cta-contact .email {
+      color: var(--ltblue);
+      font-family: sans-serif;
+      font-size: 13px;
+    }
+
+    .doc-footer {
+      text-align: center;
+      padding: 20px 48px;
+      font-family: sans-serif;
+      font-size: 11px;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <div class="breadcrumb">
+    <a href="index.html">← Kit Overview</a> &nbsp;/&nbsp; Investment Structure Overview
+  </div>
+
+  <div class="doc-header">
+    <div class="doc-header-top">
+      <div class="doc-logo-block">
+        <div class="doc-logo">T</div>
+        <div class="doc-brand">
+          <h1>Tritower Financial Group</h1>
+          <p>Tritower Real Estate Capital &nbsp;·&nbsp; Boston, MA &nbsp;·&nbsp; tritowerfinancial.com</p>
+        </div>
+      </div>
+      <div class="doc-badge">Fructify Kit Preview</div>
+    </div>
+    <div class="doc-headline">Single-Asset REITs for Accredited Investors</div>
+    <div class="doc-subhead">A straightforward alternative to direct real estate ownership — transparent, tax-efficient, professionally managed</div>
+  </div>
+
+  <div class="stats-bar">
+    <div class="stat-cell">
+      <div class="stat-num">$<span>577</span>M</div>
+      <div class="stat-label">Equity Raised</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num"><span>60</span>+</div>
+      <div class="stat-label">Properties Acquired</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num">$<span>1</span>B</div>
+      <div class="stat-label">Market Capitalization</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num"><span>NNN</span></div>
+      <div class="stat-label">Lease Structure</div>
+    </div>
+  </div>
+
+  <div class="content-grid">
+    <div class="content-col">
+      <div class="section-label">What We Do</div>
+      <h2>Real estate ownership, without the headaches of being a landlord</h2>
+      <p>Tritower acquires single commercial properties — a pharmacy, a fast-food location, a medical office — and structures each one as its own REIT. Investors own a direct interest in a specific building with a specific tenant on a long-term NNN lease.</p>
+      <p>There's no blind pool. No wondering what's in the fund. Your clients know exactly what they own before they invest.</p>
+      <p>Tritower handles everything: acquisition, property management, tenant relationships, compliance, and reporting. Investors receive regular income distributions and a K-1 at year-end reflecting real estate depreciation.</p>
+    </div>
+    <div class="content-col">
+      <div class="section-label">How It Works</div>
+      <h2>From introduction to invested in six steps</h2>
+      <ul class="steps-list">
+        <li>
+          <div class="step-circle">1</div>
+          <div class="step-text"><strong>Advisor Introduction</strong><span>Tritower introduces a specific available property — tenant, location, lease terms, projected return.</span></div>
+        </li>
+        <li>
+          <div class="step-circle">2</div>
+          <div class="step-text"><strong>Client Accreditation Review</strong><span>Advisor confirms client qualifies as an accredited investor. Tritower provides all Reg D disclosure documents.</span></div>
+        </li>
+        <li>
+          <div class="step-circle">3</div>
+          <div class="step-text"><strong>Subscription Documents</strong><span>Client reviews and executes the subscription agreement. Minimum investment typically $50,000–$100,000.</span></div>
+        </li>
+        <li>
+          <div class="step-circle">4</div>
+          <div class="step-text"><strong>Capital Call &amp; Close</strong><span>Funds are called at closing. Investor is a REIT shareholder from day one.</span></div>
+        </li>
+        <li>
+          <div class="step-circle">5</div>
+          <div class="step-text"><strong>Quarterly Distributions</strong><span>Income from NNN lease payments flows to investors quarterly.</span></div>
+        </li>
+        <li>
+          <div class="step-circle">6</div>
+          <div class="step-text"><strong>Exit at Hold Period</strong><span>Property is sold at the end of the defined hold period (typically 5–7 years). Net proceeds distributed.</span></div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="full-section">
+    <div class="section-label">Sample Deal Structure</div>
+    <div class="sample-deal">
+      <h3>Illustrative Deal — Representative Example Only</h3>
+      <div class="deal-grid">
+        <div class="deal-attr"><div class="dl">Asset Type</div><div class="dv">NNN-Leased Medical Office</div></div>
+        <div class="deal-attr"><div class="dl">Tenant</div><div class="dv">Regional Health System (investment grade)</div></div>
+        <div class="deal-attr"><div class="dl">Lease Term</div><div class="dv">12 years remaining, 2% annual escalators</div></div>
+        <div class="deal-attr"><div class="dl">Total Offering</div><div class="dv">$8.2M equity raise</div></div>
+        <div class="deal-attr"><div class="dl">Minimum Investment</div><div class="dv">$100,000</div></div>
+        <div class="deal-attr"><div class="dl">Target Hold</div><div class="dv">5–7 years</div></div>
+        <div class="deal-attr"><div class="dl">Projected Cash-on-Cash</div><div class="dv gold">6.2%</div></div>
+        <div class="deal-attr"><div class="dl">Tax Treatment</div><div class="dv">Depreciation pass-through via K-1</div></div>
+        <div class="deal-attr"><div class="dl">Liquidity</div><div class="dv">None until exit — plan accordingly</div></div>
+      </div>
+      <div class="deal-disclaimer">Illustrative example only. Past performance is not indicative of future results. All investments involve risk, including possible loss of principal. This is not an offer to sell securities. Actual deal terms will vary. Investments are available only to accredited investors via Reg D private placement.</div>
+    </div>
+  </div>
+
+  <div class="full-section" style="padding-top:28px">
+    <div class="section-label">Competitive Comparison</div>
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Tritower Single-Asset REIT</th>
+          <th>Direct Property Ownership</th>
+          <th>Publicly Traded REIT</th>
+          <th>Blind Pool Private Fund</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Know exactly what you own</td>
+          <td><span class="check">✓ Yes — specific building</span></td>
+          <td><span class="check">✓ Yes</span></td>
+          <td><span class="cross">✗ No — portfolio of hundreds</span></td>
+          <td><span class="cross">✗ No — assets chosen later</span></td>
+        </tr>
+        <tr>
+          <td>Management burden</td>
+          <td><span class="check">✓ None — fully managed</span></td>
+          <td><span class="cross">✗ High — landlord responsibilities</span></td>
+          <td><span class="check">✓ None</span></td>
+          <td><span class="check">✓ None</span></td>
+        </tr>
+        <tr>
+          <td>Equity market correlation</td>
+          <td><span class="check">✓ None — private</span></td>
+          <td><span class="check">✓ None</span></td>
+          <td><span class="cross">✗ High — trades like a stock</span></td>
+          <td><span class="check">✓ None — private</span></td>
+        </tr>
+        <tr>
+          <td>Tax efficiency (depreciation)</td>
+          <td><span class="check">✓ Full K-1 pass-through</span></td>
+          <td><span class="check">✓ Yes</span></td>
+          <td><span class="cross">✗ Limited</span></td>
+          <td><span class="neutral">Varies by structure</span></td>
+        </tr>
+        <tr>
+          <td>Minimum investment</td>
+          <td><span class="neutral">$50K–$100K</span></td>
+          <td><span class="cross">✗ $500K–$2M+ typical</span></td>
+          <td><span class="check">✓ Any amount</span></td>
+          <td><span class="neutral">$250K+ typical</span></td>
+        </tr>
+        <tr>
+          <td>Liquidity</td>
+          <td><span class="neutral">None until exit (5–7 yr)</span></td>
+          <td><span class="neutral">Low — months to sell</span></td>
+          <td><span class="check">✓ Daily liquidity</span></td>
+          <td><span class="neutral">None until exit</span></td>
+        </tr>
+        <tr>
+          <td>Advisor referral relationship</td>
+          <td><span class="check">✓ Yes — advisor stays the relationship</span></td>
+          <td><span class="cross">✗ No — client DIYs</span></td>
+          <td><span class="cross">✗ No referral needed</span></td>
+          <td><span class="neutral">Sometimes</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="full-section">
+    <div class="section-label">Why Advisors Refer to Tritower</div>
+    <div class="advisor-props">
+      <div class="prop-card">
+        <div class="prop-icon">💬</div>
+        <h3>A Story Worth Telling</h3>
+        <p>"We put 5% in a NNN-leased pharmacy in Framingham" lands differently than "we have 5% in alternatives." Clients remember what they own.</p>
+      </div>
+      <div class="prop-card">
+        <div class="prop-icon">🔒</div>
+        <h3>You Stay the Relationship</h3>
+        <p>Tritower is the operator, you're the advisor. Your client never talks to us without you. No disintermediation, ever.</p>
+      </div>
+      <div class="prop-card">
+        <div class="prop-icon">📊</div>
+        <h3>Tax Efficiency You Can Point To</h3>
+        <p>Real estate depreciation passes through to clients via K-1. Your CPA clients will notice. Your tax-sensitive clients will thank you.</p>
+      </div>
+      <div class="prop-card">
+        <div class="prop-icon">🤝</div>
+        <h3>We Work Small</h3>
+        <p>Tritower works with a select group of advisors. You'll always know who to call and you'll always get an answer the same day.</p>
+      </div>
+      <div class="prop-card">
+        <div class="prop-icon">📋</div>
+        <h3>Full Transparency</h3>
+        <p>Every offering includes a complete property profile, tenant credit summary, lease abstract, and financial projections before you make any recommendation.</p>
+      </div>
+      <div class="prop-card">
+        <div class="prop-icon">🗺️</div>
+        <h3>We Know Boston</h3>
+        <p>Tritower is based in Boston and knows this market. North Shore relationships are something we've built for years — same community, same network.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-section">
+    <div class="cta-text">
+      <h2>Ready to explore a fit for your clients?</h2>
+      <p>Patrick is happy to walk you through the current deal pipeline — no commitment, just a conversation between neighbors.</p>
+    </div>
+    <div class="cta-contact">
+      <span class="name">Patrick M. Gorman, Jr.</span>
+      <span class="role">Partner &amp; President, Tritower Real Estate Capital</span>
+      <span class="email">pgorman@tritowerfinancial.com &nbsp;·&nbsp; tritowerfinancial.com</span>
+    </div>
+  </div>
+
+  <div class="doc-footer">
+    This document is a general overview prepared for informational purposes only and does not constitute an offer to sell or solicitation of an offer to buy any security.
+    Investments in Tritower offerings are available only to accredited investors and are offered pursuant to Regulation D under the Securities Act of 1933.
+    Past performance is not indicative of future results. All investments involve risk, including possible loss of principal.<br><br>
+    <em>Prepared by Fructify LLC as a Cowork Kit preview for Patrick M. Gorman, Jr. &nbsp;·&nbsp; smilbury@fructifyme.com</em>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ideal Referral Partner Profile — Tritower Financial</title>
+  <style>
+    :root {
+      --navy: #1B3A6B;
+      --gold: #B8860B;
+      --gold-light: #D4A017;
+      --midblue: #2C5F8A;
+      --ltblue: #D6E4F0;
+      --bg: #F4F7FB;
+      --white: #FFFFFF;
+      --text: #1A1A2E;
+      --muted: #5A6A7A;
+      --border: #CBD5E1;
+      --green: #1A7A4A;
+      --green-bg: #E8F5EE;
+      --red: #A31515;
+      --red-bg: #FEF0F0;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Georgia', serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+    .header { background: var(--navy); }
+    .header-top {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 48px; border-bottom: 3px solid var(--gold);
+    }
+    .header-brand { display: flex; align-items: center; gap: 16px; }
+    .header-logo {
+      width: 44px; height: 44px; background: var(--gold); border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; font-weight: 700; color: var(--navy); font-family: sans-serif; letter-spacing: -1px;
+    }
+    .header-title { color: var(--white); font-size: 20px; font-weight: normal; letter-spacing: 0.5px; }
+    .header-title span { color: var(--gold-light); font-weight: bold; }
+    .header-badge {
+      background: rgba(184,134,11,0.2); border: 1px solid var(--gold);
+      color: var(--gold-light); font-family: sans-serif; font-size: 11px;
+      font-weight: 600; padding: 4px 12px; border-radius: 20px; letter-spacing: 1px; text-transform: uppercase;
+    }
+    .header-sub { padding: 14px 48px; background: rgba(0,0,0,0.2); }
+    .header-sub p { color: rgba(255,255,255,0.7); font-family: sans-serif; font-size: 13px; }
+    .header-sub strong { color: rgba(255,255,255,0.9); }
+
+    .breadcrumb {
+      background: var(--white); border-bottom: 1px solid var(--border);
+      padding: 10px 48px; font-family: sans-serif; font-size: 12px; color: var(--muted);
+    }
+    .breadcrumb a { color: var(--midblue); text-decoration: none; }
+
+    main { max-width: 960px; margin: 0 auto; padding: 40px 24px 80px; }
+
+    .page-title-block {
+      margin-bottom: 36px;
+    }
+    .page-title-block h1 { font-size: 28px; color: var(--navy); margin-bottom: 8px; }
+    .page-title-block p { font-family: sans-serif; font-size: 14px; color: var(--muted); line-height: 1.6; max-width: 680px; }
+
+    /* Profile card hero */
+    .profile-hero {
+      background: var(--navy);
+      border-radius: 12px;
+      padding: 36px 40px;
+      margin-bottom: 32px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 32px;
+      position: relative;
+      overflow: hidden;
+    }
+    .profile-hero::before {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, rgba(184,134,11,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-section h2 {
+      color: var(--gold-light);
+      font-family: sans-serif;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+    .hero-attr {
+      margin-bottom: 12px;
+    }
+    .hero-attr .attr-label {
+      color: rgba(255,255,255,0.5);
+      font-family: sans-serif;
+      font-size: 11px;
+      margin-bottom: 2px;
+    }
+    .hero-attr .attr-val {
+      color: var(--white);
+      font-family: sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    /* Fit signals */
+    .signals-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+    .signal-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .signal-card-header {
+      padding: 14px 20px;
+      font-family: sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+    .signal-card-header.green { background: var(--green-bg); color: var(--green); }
+    .signal-card-header.red { background: var(--red-bg); color: var(--red); }
+    .signal-card-header.gold { background: rgba(184,134,11,0.1); color: #7A5800; }
+    .signal-card-header.blue { background: var(--ltblue); color: var(--midblue); }
+    .signal-list {
+      list-style: none;
+      padding: 16px 20px;
+    }
+    .signal-list li {
+      font-family: sans-serif;
+      font-size: 13px;
+      color: var(--text);
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.5;
+    }
+    .signal-list li:last-child { border-bottom: none; }
+    .signal-list li .icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+
+    /* Scoring matrix */
+    .scoring-section {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+    .scoring-header {
+      background: var(--midblue);
+      padding: 16px 24px;
+      color: var(--white);
+      font-family: sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .scoring-header p {
+      font-size: 12px;
+      font-weight: normal;
+      color: rgba(255,255,255,0.7);
+      margin-top: 4px;
+    }
+    .scoring-table { width: 100%; border-collapse: collapse; }
+    .scoring-table th {
+      background: #F0F4F8;
+      padding: 10px 20px;
+      font-family: sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--muted);
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    .scoring-table td {
+      padding: 12px 20px;
+      font-family: sans-serif;
+      font-size: 13px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    .scoring-table tr:last-child td { border-bottom: none; }
+    .scoring-table tr:nth-child(even) td { background: #FAFBFD; }
+    .criteria-name { font-weight: 700; color: var(--navy); }
+    .criteria-desc { color: var(--muted); font-size: 12px; margin-top: 2px; }
+    .weight-badge {
+      display: inline-block;
+      background: var(--ltblue);
+      color: var(--midblue);
+      font-weight: 700;
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+    .score-bar-wrap { display: flex; align-items: center; gap: 10px; }
+    .score-bar {
+      flex: 1;
+      height: 6px;
+      background: var(--border);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .score-bar-fill {
+      height: 100%;
+      background: var(--navy);
+      border-radius: 3px;
+    }
+    .score-bar-fill.gold { background: var(--gold); }
+    .score-val { font-weight: 700; color: var(--navy); font-size: 12px; white-space: nowrap; }
+
+    /* Persona narrative */
+    .persona-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-left: 5px solid var(--gold);
+      border-radius: 10px;
+      padding: 32px 36px;
+      margin-bottom: 32px;
+    }
+    .persona-card h2 {
+      font-size: 20px;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+    .persona-card .persona-subtitle {
+      font-family: sans-serif;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+    .persona-card p {
+      font-size: 15px;
+      line-height: 1.85;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+    .persona-card p:last-child { margin-bottom: 0; }
+    .persona-card strong { color: var(--navy); }
+
+    /* North Shore map */
+    .geography-section {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+    .geography-header {
+      background: var(--navy);
+      padding: 16px 24px;
+      color: var(--white);
+      font-family: sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .geography-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+    .geo-cell {
+      padding: 14px 18px;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      font-family: sans-serif;
+    }
+    .geo-cell:nth-child(4n) { border-right: none; }
+    .geo-cell .town { font-weight: 700; font-size: 13px; color: var(--navy); }
+    .geo-cell .firms { font-size: 11px; color: var(--muted); margin-top: 3px; }
+
+    /* Conversation starters */
+    .conversation-section {
+      background: rgba(184,134,11,0.07);
+      border: 1px solid rgba(184,134,11,0.3);
+      border-radius: 10px;
+      padding: 28px 32px;
+      margin-bottom: 32px;
+    }
+    .conversation-section h2 {
+      font-family: sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #7A5800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 18px;
+    }
+    .convo-item {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 16px;
+      align-items: flex-start;
+    }
+    .convo-item:last-child { margin-bottom: 0; }
+    .convo-q {
+      background: var(--navy);
+      color: var(--white);
+      font-family: sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 4px;
+      white-space: nowrap;
+      margin-top: 2px;
+    }
+    .convo-text {
+      font-family: sans-serif;
+      font-size: 13px;
+      color: var(--text);
+      line-height: 1.6;
+      font-style: italic;
+    }
+
+    .page-footer {
+      text-align: center; padding: 32px 24px;
+      font-family: sans-serif; font-size: 12px; color: var(--muted);
+      border-top: 1px solid var(--border); margin-top: 60px;
+    }
+    .page-footer a { color: var(--midblue); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <div class="header-brand">
+      <div class="header-logo">T</div>
+      <div class="header-title"><span>Tritower</span> Financial Group &nbsp;·&nbsp; ICP Profile</div>
+    </div>
+    <div class="header-badge">Fructify Kit Preview</div>
+  </div>
+  <div class="header-sub">
+    <p>Configured for <strong>Patrick M. Gorman, Jr.</strong> &nbsp;·&nbsp; Partner &amp; President, Tritower Real Estate Capital &nbsp;·&nbsp; Ideal Referral Partner Definition</p>
+  </div>
+</div>
+
+<div class="breadcrumb">
+  <a href="index.html">← Kit Overview</a> &nbsp;/&nbsp; ICP Profile
+</div>
+
+<main>
+
+  <div class="page-title-block">
+    <h1>Ideal Referral Partner Profile</h1>
+    <p>This is how your Cowork Kit defines your highest-value referral source — the type of advisor whose client relationships create the most natural path to a Tritower investment. Claude uses this profile to score leads, write personalized outreach, and flag which prospects to prioritize.</p>
+  </div>
+
+  <div class="profile-hero">
+    <div class="hero-section">
+      <h2>Firm Profile</h2>
+      <div class="hero-attr"><div class="attr-label">Firm Type</div><div class="attr-val">Independent RIA</div></div>
+      <div class="hero-attr"><div class="attr-label">Structure</div><div class="attr-val">Fee-only or fee-based</div></div>
+      <div class="hero-attr"><div class="attr-label">AUM Range</div><div class="attr-val">$50M – $500M</div></div>
+      <div class="hero-attr"><div class="attr-label">Team Size</div><div class="attr-val">3 – 25 advisors</div></div>
+    </div>
+    <div class="hero-section">
+      <h2>Client Profile</h2>
+      <div class="hero-attr"><div class="attr-label">Client Type</div><div class="attr-val">HNW / Accredited Investors</div></div>
+      <div class="hero-attr"><div class="attr-label">Typical Net Worth</div><div class="attr-val">$1M – $10M liquid</div></div>
+      <div class="hero-attr"><div class="attr-label">Allocation Interest</div><div class="attr-val">Real assets, alternatives</div></div>
+      <div class="hero-attr"><div class="attr-label">Tax Sensitivity</div><div class="attr-val">High — depreciation matters</div></div>
+    </div>
+    <div class="hero-section">
+      <h2>Geography</h2>
+      <div class="hero-attr"><div class="attr-label">Primary Market</div><div class="attr-val">North Shore Boston, MA</div></div>
+      <div class="hero-attr"><div class="attr-label">Key Towns</div><div class="attr-val">Beverly, Salem, Marblehead, Newburyport</div></div>
+      <div class="hero-attr"><div class="attr-label">Secondary</div><div class="attr-val">Greater Boston metro</div></div>
+      <div class="hero-attr"><div class="attr-label">Commute Overlap</div><div class="attr-val">Shared North Shore community</div></div>
+    </div>
+  </div>
+
+  <div class="signals-grid">
+    <div class="signal-card">
+      <div class="signal-card-header green">✅ Strong Fit Signals</div>
+      <ul class="signal-list">
+        <li><span class="icon">✓</span> Independent RIA — no broker-dealer product list to navigate</li>
+        <li><span class="icon">✓</span> Client base is accredited investors ($1M+ liquid)</li>
+        <li><span class="icon">✓</span> Already recommends private placements or alternative investments</li>
+        <li><span class="icon">✓</span> Advisors talk about tax efficiency and depreciation with clients</li>
+        <li><span class="icon">✓</span> Firm principal makes investment decisions (not committee-driven)</li>
+        <li><span class="icon">✓</span> Clients ask about real estate but advisor doesn't want to manage it</li>
+        <li><span class="icon">✓</span> Advisor has relationship depth — knows client balance sheets</li>
+      </ul>
+    </div>
+    <div class="signal-card">
+      <div class="signal-card-header red">🚫 Disqualifying Signals</div>
+      <ul class="signal-list">
+        <li><span class="icon">✗</span> Wirehouse or captive broker (Merrill, UBS, Morgan Stanley)</li>
+        <li><span class="icon">✗</span> Primarily retail / mass affluent under $500K investable</li>
+        <li><span class="icon">✗</span> Firm has an approved product list that excludes Reg D offerings</li>
+        <li><span class="icon">✗</span> Investment committee controls all alternative allocation decisions</li>
+        <li><span class="icon">✗</span> Advisor is anti-real estate or has had bad REIT experience</li>
+        <li><span class="icon">✗</span> Purely transactional — no ongoing client relationship model</li>
+      </ul>
+    </div>
+    <div class="signal-card">
+      <div class="signal-card-header gold">⚡ High-Conviction Triggers</div>
+      <ul class="signal-list">
+        <li><span class="icon">★</span> Client recently sold a business or liquidity event — needs deployment</li>
+        <li><span class="icon">★</span> Client has 1031 exchange need (Tritower can sometimes be a solution)</li>
+        <li><span class="icon">★</span> Advisor is consolidating alternatives into 3–5 trusted partners</li>
+        <li><span class="icon">★</span> New advisor at a firm already familiar with Tritower</li>
+        <li><span class="icon">★</span> Advisor is at a firm that recently went independent from a wirehouse</li>
+      </ul>
+    </div>
+    <div class="signal-card">
+      <div class="signal-card-header blue">🤝 Relationship Entry Points</div>
+      <ul class="signal-list">
+        <li><span class="icon">→</span> Shared North Shore community (kids' schools, charity events, clubs)</li>
+        <li><span class="icon">→</span> CFA / CFP study group or local chapter connections</li>
+        <li><span class="icon">→</span> FINRA / SEC compliance conversation (Patrick is Series 79-qualified)</li>
+        <li><span class="icon">→</span> Boston-area CRE market conversation — Patrick knows the inventory</li>
+        <li><span class="icon">→</span> Mutual referral with a CPA or estate attorney</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="scoring-section">
+    <div class="scoring-header">
+      ICP Fit Scoring Criteria
+      <p>Claude scores every lead on these five dimensions and calculates a composite fit rating used in the lead dashboard.</p>
+    </div>
+    <table class="scoring-table">
+      <thead>
+        <tr>
+          <th style="width:28%">Criterion</th>
+          <th style="width:10%">Weight</th>
+          <th>What to Look For</th>
+          <th style="width:20%">Signal Strength</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><div class="criteria-name">Firm Independence</div><div class="criteria-desc">Can they actually recommend Tritower?</div></td>
+          <td><span class="weight-badge">30%</span></td>
+          <td style="font-family:sans-serif;font-size:12px;color:var(--muted)">Independent RIA, fee-only/fee-based, no captive product shelf, no compliance wall on Reg D private placements</td>
+          <td>
+            <div class="score-bar-wrap">
+              <div class="score-bar"><div class="score-bar-fill" style="width:90%"></div></div>
+              <span class="score-val">9/10</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="criteria-name">Client Accreditation</div><div class="criteria-desc">Are their clients eligible investors?</div></td>
+          <td><span class="weight-badge">25%</span></td>
+          <td style="font-family:sans-serif;font-size:12px;color:var(--muted)">HNW focus, $1M+ liquid investable, accredited investor base, experience with Reg D or private placements</td>
+          <td>
+            <div class="score-bar-wrap">
+              <div class="score-bar"><div class="score-bar-fill gold" style="width:80%"></div></div>
+              <span class="score-val">8/10</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="criteria-name">Alternatives Appetite</div><div class="criteria-desc">Do they already recommend non-liquid investments?</div></td>
+          <td><span class="weight-badge">20%</span></td>
+          <td style="font-family:sans-serif;font-size:12px;color:var(--muted)">History with PE, private credit, non-traded REITs, direct real estate; real assets in stated allocation framework</td>
+          <td>
+            <div class="score-bar-wrap">
+              <div class="score-bar"><div class="score-bar-fill" style="width:75%"></div></div>
+              <span class="score-val">7.5/10</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="criteria-name">Geography Proximity</div><div class="criteria-desc">Are they close enough to build a real relationship?</div></td>
+          <td><span class="weight-badge">15%</span></td>
+          <td style="font-family:sans-serif;font-size:12px;color:var(--muted)">North Shore preferred; Greater Boston acceptable; same community = faster trust-building, same school systems, civic orgs</td>
+          <td>
+            <div class="score-bar-wrap">
+              <div class="score-bar"><div class="score-bar-fill gold" style="width:70%"></div></div>
+              <span class="score-val">7/10</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="criteria-name">Decision Authority</div><div class="criteria-desc">Can they recommend without a committee?</div></td>
+          <td><span class="weight-badge">10%</span></td>
+          <td style="font-family:sans-serif;font-size:12px;color:var(--muted)">Principal, partner, or senior advisor with full discretion; small firm where advisors own the client relationship end-to-end</td>
+          <td>
+            <div class="score-bar-wrap">
+              <div class="score-bar"><div class="score-bar-fill" style="width:85%"></div></div>
+              <span class="score-val">8.5/10</span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="persona-card">
+    <h2>The Ideal Partner — "Sarah at Northshore Wealth"</h2>
+    <div class="persona-subtitle">A composite persona representing Tritower's best-fit referral relationship</div>
+    <p>Sarah has been an independent RIA for eleven years, left a wirehouse after realizing she couldn't recommend what she actually believed in. Her book is 85 families — most of them business owners, a few physicians, one or two inherited wealth. Average household has $2.5M with her, maybe $5M total. She's fee-only, she's proud of it, and her clients trust her completely.</p>
+    <p>She's been asked about real estate for years. She's seen what happens when clients DIY it — the midnight calls about tenants, the deferred cap gains that ballooned into a problem. She doesn't want to be a real estate advisor. But she <strong>does</strong> want a trusted partner who can handle the real estate conversation so she doesn't lose the allocation to someone else.</p>
+    <p>She's not going to recommend anyone she doesn't know. The first meeting with Patrick is about trust, not product. She wants to understand how Tritower thinks about downside, how they've handled difficult tenants, what happens in a default scenario. If those answers are good — and she knows <strong>her clients</strong> are good fits — she'll send business, and she'll send it repeatedly.</p>
+    <p>She lives in Marblehead. Patrick probably knows someone who knows her. That's the real ICP — not a firmographic profile, but a human being who is already looking for exactly what Tritower offers, and just needs a trusted introduction.</p>
+  </div>
+
+  <div class="geography-section">
+    <div class="geography-header">North Shore Target Geography — Key Markets</div>
+    <div class="geography-grid">
+      <div class="geo-cell"><div class="town">Beverly</div><div class="firms">Cabot Wealth Management HQ</div></div>
+      <div class="geo-cell"><div class="town">Salem</div><div class="firms">Cabot Wealth (multiple advisors)</div></div>
+      <div class="geo-cell"><div class="town">Marblehead</div><div class="firms">TQM Wealth Partners</div></div>
+      <div class="geo-cell"><div class="town">Lynnfield</div><div class="firms">F.L. Putnam Investment Mgmt</div></div>
+      <div class="geo-cell"><div class="town">Newburyport</div><div class="firms">Independent boutique advisors</div></div>
+      <div class="geo-cell"><div class="town">Danvers</div><div class="firms">Regional wealth management cluster</div></div>
+      <div class="geo-cell"><div class="town">Gloucester</div><div class="firms">HNW family office adjacent</div></div>
+      <div class="geo-cell"><div class="town">Ipswich</div><div class="firms">Estate planning / wealth advisory</div></div>
+      <div class="geo-cell"><div class="town">Andover</div><div class="firms">Corporate exec / physician wealth</div></div>
+      <div class="geo-cell"><div class="town">Swampscott</div><div class="firms">North Shore commuter belt</div></div>
+      <div class="geo-cell"><div class="town">Peabody</div><div class="firms">Growing RIA presence</div></div>
+      <div class="geo-cell"><div class="town">Manchester</div><div class="firms">Old-money coastal families</div></div>
+    </div>
+  </div>
+
+  <div class="conversation-section">
+    <h2>🗣️ Conversation Starters Claude Generates for Each Lead</h2>
+    <div class="convo-item">
+      <span class="convo-q">OPENER</span>
+      <div class="convo-text">"We've been doing a lot of work with advisors up here on the North Shore — it feels like there's a real appetite for real asset exposure that isn't the public REIT market. Is that something your clients are asking about?"</div>
+    </div>
+    <div class="convo-item">
+      <span class="convo-q">TRUST</span>
+      <div class="convo-text">"The way we think about it: advisors are the fiduciary, we're the real estate operator. You never have to explain a balance sheet or a tenant — that's on us. Your job is to decide if the structure fits your client's allocation."</div>
+    </div>
+    <div class="convo-item">
+      <span class="convo-q">OBJECTION</span>
+      <div class="convo-text">"I understand the illiquidity concern — it's real. We structure everything with a defined hold period so clients can plan around it. And compared to a direct property, there's no management overhead, no 3am calls."</div>
+    </div>
+    <div class="convo-item">
+      <span class="convo-q">CLOSE</span>
+      <div class="convo-text">"Would it be worth a 30-minute call where I walk you through the last two deals — the property, the tenant, the return structure — so you can see exactly what your clients would be investing in?"</div>
+    </div>
+  </div>
+
+</main>
+
+<div class="page-footer">
+  Prepared by <strong>Fructify LLC</strong> as a Cowork Kit preview for Patrick M. Gorman, Jr. &nbsp;·&nbsp; <a href="mailto:smilbury@fructifyme.com">smilbury@fructifyme.com</a><br>
+  This ICP profile is embedded in Patrick's kit memory — Claude references it when writing outreach, scoring leads, and preparing for calls.
+</div>
+
+</body>
+</html>

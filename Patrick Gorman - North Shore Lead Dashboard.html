@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tritower Financial — North Shore Lead Dashboard</title>
+<style>
+  :root {
+    --navy: #1B3A6B;
+    --gold: #B8860B;
+    --midblue: #2C5F8A;
+    --ltblue: #D6E4F0;
+    --green: #1a7a4a;
+    --ltgreen: #e8f5ee;
+    --yellow: #7a6200;
+    --ltyellow: #fdf8e1;
+    --gray: #555;
+    --lgray: #f5f7fa;
+    --border: #dde3ea;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    background: #f0f4f8;
+    color: #333;
+    font-size: 14px;
+  }
+
+  /* ─── Header ─── */
+  .header {
+    background: var(--navy);
+    color: white;
+    padding: 28px 40px 20px;
+    border-bottom: 4px solid var(--gold);
+  }
+  .header-top { display: flex; justify-content: space-between; align-items: flex-start; }
+  .header h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; }
+  .header h2 { font-size: 13px; font-weight: 400; opacity: 0.75; margin-top: 4px; }
+  .header-meta { text-align: right; font-size: 12px; opacity: 0.7; }
+  .header-meta span { display: block; }
+
+  .stats-row {
+    display: flex; gap: 32px; margin-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    padding-top: 16px;
+  }
+  .stat { }
+  .stat-value { font-size: 26px; font-weight: 700; color: #fff; }
+  .stat-label { font-size: 11px; opacity: 0.65; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+
+  /* ─── ICP Summary ─── */
+  .icp-bar {
+    background: var(--midblue);
+    color: white;
+    padding: 10px 40px;
+    font-size: 12px;
+    display: flex; align-items: center; gap: 20px;
+  }
+  .icp-bar strong { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.8; }
+  .icp-tag {
+    background: rgba(255,255,255,0.15);
+    border-radius: 3px;
+    padding: 2px 8px;
+  }
+
+  /* ─── Filters ─── */
+  .controls {
+    background: white;
+    border-bottom: 1px solid var(--border);
+    padding: 12px 40px;
+    display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+  }
+  .controls label { font-size: 12px; color: #888; font-weight: 600; text-transform: uppercase; letter-spacing: 0.3px; }
+  .filter-btn {
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 5px 12px;
+    font-size: 12px;
+    cursor: pointer;
+    background: white;
+    color: #555;
+    transition: all 0.15s;
+  }
+  .filter-btn:hover { background: var(--ltblue); border-color: var(--midblue); color: var(--navy); }
+  .filter-btn.active { background: var(--navy); border-color: var(--navy); color: white; }
+  .search-input {
+    margin-left: auto;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-size: 13px;
+    width: 200px;
+    outline: none;
+  }
+  .search-input:focus { border-color: var(--midblue); }
+
+  /* ─── Main ─── */
+  .main { padding: 24px 40px 40px; }
+
+  /* ─── Lead Cards ─── */
+  .leads-grid { display: flex; flex-direction: column; gap: 12px; }
+
+  .lead-card {
+    background: white;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    transition: box-shadow 0.15s;
+  }
+  .lead-card:hover { box-shadow: 0 4px 16px rgba(27,58,107,0.10); }
+  .lead-card.hidden { display: none; }
+
+  .card-main {
+    display: grid;
+    grid-template-columns: 48px 280px 1fr 160px 140px 110px;
+    align-items: center;
+    padding: 16px 20px;
+    gap: 16px;
+    cursor: pointer;
+  }
+
+  .rank {
+    font-size: 18px; font-weight: 800; color: var(--navy);
+    text-align: center;
+  }
+
+  .person-info {}
+  .person-name { font-size: 15px; font-weight: 700; color: var(--navy); }
+  .person-title { font-size: 12px; color: #666; margin-top: 2px; line-height: 1.3; }
+  .person-location { font-size: 11px; color: #999; margin-top: 3px; }
+
+  .company-info {}
+  .company-name { font-size: 13px; font-weight: 600; color: #333; }
+  .company-meta { font-size: 11px; color: #888; margin-top: 3px; }
+  .company-tags { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
+  .tag {
+    font-size: 10px; padding: 2px 7px;
+    border-radius: 3px; font-weight: 500;
+    background: var(--ltblue); color: var(--midblue);
+  }
+
+  .contact-info {}
+  .contact-row { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #444; margin-bottom: 4px; }
+  .contact-row a { color: var(--midblue); text-decoration: none; }
+  .contact-row a:hover { text-decoration: underline; }
+  .contact-icon { font-size: 11px; width: 14px; text-align: center; }
+
+  .fit-cell { text-align: center; }
+  .fit-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+  .fit-strong { background: var(--ltgreen); color: var(--green); }
+  .fit-good { background: var(--ltyellow); color: var(--yellow); }
+
+  .action-cell { text-align: right; }
+  .expand-btn {
+    font-size: 11px; color: var(--midblue);
+    border: none; background: none; cursor: pointer;
+    text-decoration: underline;
+  }
+
+  /* ─── Expanded detail ─── */
+  .card-detail {
+    display: none;
+    border-top: 1px solid var(--border);
+    background: var(--lgray);
+    padding: 20px 20px 20px 84px;
+  }
+  .card-detail.open { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
+  .detail-section h4 {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.5px; color: var(--midblue); margin-bottom: 8px;
+  }
+  .detail-section p { font-size: 13px; color: #444; line-height: 1.6; }
+  .talking-point {
+    background: white;
+    border-left: 3px solid var(--gold);
+    padding: 10px 14px;
+    border-radius: 0 4px 4px 0;
+    font-size: 13px; color: #333; line-height: 1.6;
+    font-style: italic;
+  }
+  .detail-links { display: flex; gap: 10px; margin-top: 10px; }
+  .detail-link {
+    font-size: 12px; padding: 5px 12px;
+    border-radius: 4px; text-decoration: none;
+    border: 1px solid var(--border);
+    color: var(--midblue);
+    background: white;
+  }
+  .detail-link:hover { background: var(--ltblue); }
+
+  /* ─── Footer ─── */
+  .footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 11px;
+    color: #aaa;
+    border-top: 1px solid var(--border);
+    background: white;
+    margin-top: 32px;
+  }
+
+  @media (max-width: 900px) {
+    .card-main { grid-template-columns: 1fr; }
+    .header { padding: 20px; }
+    .main { padding: 16px; }
+    .controls { padding: 12px 16px; }
+    .icp-bar { padding: 10px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-top">
+    <div>
+      <h1>Tritower Financial — North Shore Lead Dashboard</h1>
+      <h2>Accredited investor referral targets · Independent RIAs & Wealth Advisors · North Shore, MA</h2>
+    </div>
+    <div class="header-meta">
+      <span>Prepared for Patrick M. Gorman, Jr.</span>
+      <span>Partner · Tritower Financial Group</span>
+      <span style="margin-top:6px; color: #a0b8d8;">Generated March 2026 · Fructify Solutions</span>
+    </div>
+  </div>
+  <div class="stats-row">
+    <div class="stat"><div class="stat-value">10</div><div class="stat-label">Verified Leads</div></div>
+    <div class="stat"><div class="stat-value">7</div><div class="stat-label">Strong ICP Fit</div></div>
+    <div class="stat"><div class="stat-value">10</div><div class="stat-label">Verified Emails</div></div>
+    <div class="stat"><div class="stat-value">3</div><div class="stat-label">Firms Covered</div></div>
+    <div class="stat"><div class="stat-value">$47M+</div><div class="stat-label">Firm Revenue (Known)</div></div>
+  </div>
+</div>
+
+<!-- ICP BAR -->
+<div class="icp-bar">
+  <strong>ICP:</strong>
+  <span class="icp-tag">Independent RIA Principals</span>
+  <span class="icp-tag">Wealth Advisors managing HNW clients</span>
+  <span class="icp-tag">North Shore Boston</span>
+  <span class="icp-tag">Accredited investor referral channels</span>
+  <span class="icp-tag">Real estate-receptive portfolios</span>
+</div>
+
+<!-- CONTROLS -->
+<div class="controls">
+  <label>Filter:</label>
+  <button class="filter-btn active" onclick="filterLeads('all', this)">All (10)</button>
+  <button class="filter-btn" onclick="filterLeads('strong', this)">Strong Fit (7)</button>
+  <button class="filter-btn" onclick="filterLeads('cabot', this)">Cabot Wealth (5)</button>
+  <button class="filter-btn" onclick="filterLeads('flputnam', this)">F.L. Putnam (4)</button>
+  <button class="filter-btn" onclick="filterLeads('tqm', this)">TQM / Other (1)</button>
+  <input class="search-input" type="text" placeholder="Search name or company..." oninput="searchLeads(this.value)">
+</div>
+
+<!-- LEADS -->
+<div class="main">
+<div class="leads-grid" id="leadsGrid">
+
+  <!-- LEAD 1 -->
+  <div class="lead-card" data-fit="strong" data-firm="cabot" data-name="greg stevens cabot wealth management">
+    <div class="card-main" onclick="toggleDetail(this)">
+      <div class="rank">1</div>
+      <div class="person-info">
+        <div class="person-name">Greg Stevens</div>
+        <div class="person-title">President / Managing Partner</div>
+        <div class="person-location">📍 Beverly, MA</div>
+      </div>
+      <div class="company-info">
+        <div class="company-name">Cabot Wealth Management</div>
+        <div class="company-meta">216 Essex St, Salem, MA · Est. 1983 · $17.2M Revenue · ~15 employees</div>
+        <div class="company-tags">
+          <span class="tag">Independent RIA</span>
+          <span class="tag">HNW Clients</span>
+          <span class="tag">North Shore</span>
+          <span class="tag">Estate Planning</span>
+        </div>
+      </div>
+      <div class="contact-info">
+        <div class="contact-row"><span class="contact-icon">✉</span> <a href="mailto:greg@ecabot.com">greg@ecabot.com</a></div>
+        <div class="contact-row"><span class="contact-icon">☎</span> +1 978-745-9233</div>
+        <div class="contact-row"><span class="contact-icon">in</span> <a href="https://www.linkedin.com/in/greg-stevens-9249234/" target="_blank">LinkedIn</a></div>
+      </div>
+      <div class="fit-cell"><span class="fit-badge fit-strong">Strong Fit</span></div>
+      <div class="action-cell"><button class="expand-btn">View details ▾</button></div>
+    </div>
+    <div class="card-detail">
+      <div class="detail-section">
+        <h4>Why Greg is a Priority Target</h4>
+        <p>Greg has been managing HNW client portfolios at Cabot since 2014, becoming President in 2017. He holds a 30% equity stake in the firm — meaning his clients' investment performance directly affects his own wealth. He came up through Putnam Investments, so he understands institutional-quality investment structures. As President of a $17M independent RIA with a 40-year track record, he controls allocation decisions for a meaningful book of North Shore HNW clients. A single conversation with Greg could open access to 10–20 accredited investor relationships.</p>
+      </div>
+      <div class="detail-section">
+        <h4>Suggested Opening Angle for Patrick</h4>
+        <div class="talking-point">
+          "Greg — I run capital formation for Tritower Financial in Boston. We structure single-asset commercial REIT investments — Amazon, Pfizer, Boeing-tenanted properties — for accredited investors who want real estate exposure without the landlord headaches. Given Cabot's focus on comprehensive planning for North Shore families, I'd love to walk you through how advisors like you have been using our offerings as a diversifier for clients who are equity-heavy. Would a 20-minute call make sense?"
+        </div>
+        <div class="detail-links">
+          <a class="detail-link" href="mailto:greg@ecabot.com">✉ Draft Email</a>
+          <a class="detail-link" href="https://www.ecabot.com" target="_blank">🌐 Cabot Website</a>
+          <a class="detail-link" href="https://www.linkedin.com/in/greg-stevens-9249234/" target="_blank">in LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEAD 2 -->
+  <div class="lead-card" data-fit="strong" data-firm="cabot" data-name="jim gasparello cabot wealth management">
+    <div class="card-main" onclick="toggleDetail(this)">
+      <div class="rank">2</div>
+      <div class="person-info">
+        <div class="person-name">Jim Gasparello</div>
+        <div class="person-title">Principal & Director of Wealth Management</div>
+        <div class="person-location">📍 Salem, MA</div>
+      </div>
+      <div class="company-info">
+        <div class="company-name">Cabot Wealth Management</div>
+        <div class="company-meta">216 Essex St, Salem, MA · Est. 1983 · $17.2M Revenue · Principal since 1996</div>
+        <div class="company-tags">
+          <span class="tag">Independent RIA</span>
+          <span class="tag">30yr Veteran</span>
+          <span class="tag">Director-level</span>
+        </div>
+      </div>
+      <div class="contact-info">
+        <div class="contact-row"><span class="contact-icon">✉</span> <a href="mailto:jimg@ecabot.com">jimg@ecabot.com</a></div>
+        <div class="contact-row"><span class="contact-icon">☎</span> +1 978-745-9233</div>
+        <div class="contact-row"><span class="contact-icon">in</span> <a href="https://www.linkedin.com/in/jimgasparello" target="_blank">LinkedIn</a></div>
+      </div>
+      <div class="fit-cell"><span class="fit-badge fit-strong">Strong Fit</span></div>
+      <div class="action-cell"><button class="expand-btn">View details ▾</button></div>
+    </div>
+    <div class="card-detail">
+      <div class="detail-section">
+        <h4>Why Jim is a Priority Target</h4>
+        <p>Jim has been a Principal at Cabot since 1996 — nearly 30 years. He is the Director of Wealth Management, which means he oversees the investment advisory relationships for Cabot's entire client book. That depth of tenure means a large, established client base of North Shore HNW individuals, many of whom have accumulated significant real estate-eligible liquid assets. He's the kind of advisor who has seen clients through multiple market cycles and is always looking for genuinely different portfolio diversifiers.</p>
+      </div>
+      <div class="detail-section">
+        <h4>Suggested Opening Angle for Patrick</h4>
+        <div class="talking-point">
+          "Jim — I'm Patrick Gorman from Tritower Financial in Boston. We raise private equity for single-tenant commercial real estate investments — net-leased properties with Fortune 500 tenants like Pfizer and Amazon — structured as single-asset REITs for accredited investors. Given your tenure managing client relationships at Cabot, I suspect you have clients who've been asking about real estate beyond their primary home. I'd love to share how other North Shore advisors have been using our deals as a meaningful, income-generating allocation. Are you open to a brief call?"
+        </div>
+        <div class="detail-links">
+          <a class="detail-link" href="mailto:jimg@ecabot.com">✉ Draft Email</a>
+          <a class="detail-link" href="https://www.linkedin.com/in/jimgasparello" target="_blank">in LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEAD 3 -->
+  <div class="lead-card" data-fit="strong" data-firm="flputnam" data-name="tom manning fl putnam investment management">
+    <div class="card-main" onclick="toggleDetail(this)">
+      <div class="rank">3</div>
+      <div class="person-info">
+        <div class="person-name">Tom Manning, CFA</div>
+        <div class="person-title">CEO & President</div>
+        <div class="person-location">📍 Lynnfield, MA (HQ)</div>
+      </div>
+      <div class="company-info">
+        <div class="company-name">F.L. Putnam Investment Management</div>
+        <div class="company-meta">6 Kimball Ln, Lynnfield, MA · Est. 1983 · $29.5M Revenue · 150 employees</div>
+        <div class="company-tags">
+          <span class="tag">Major RIA</span>
+          <span class="tag">Family Offices</span>
+          <span class="tag">Alt Investments</span>
+          <span class="tag">Foundations</span>
+        </div>
+      </div>
+      <div class="contact-info">
+        <div class="contact-row"><span class="contact-icon">✉</span> <a href="mailto:tmanning@flputnam.com">tmanning@flputnam.com</a></div>
+        <div class="contact-row"><span class="contact-icon">☎</span> +1 781-235-6323</div>
+        <div class="contact-row"><span class="contact-icon">in</span> <a href="https://www.linkedin.com/in/tom-manning-4481678" target="_blank">LinkedIn</a></div>
+      </div>
+      <div class="fit-cell"><span class="fit-badge fit-strong">Strong Fit</span></div>
+      <div class="action-cell"><button class="expand-btn">View details ▾</button></div>
+    </div>
+    <div class="card-detail">
+      <div class="detail-section">
+        <h4>Why Tom is a Priority Target</h4>
+        <p>Tom Manning is the CEO of the largest independent RIA on the North Shore — $29.5M in revenue, 150 employees, Lynnfield-headquartered, founded 1983. F.L. Putnam explicitly lists "alternative investments" and "private market impact investing" among its keywords, meaning their advisors are already comfortable recommending private placements to clients. Tom's background at Bank of America (Managing Director, Portfolio Advisory Services) and Silver Bridge Advisors means he understands institutional-quality deal structures. This is the highest-leverage single relationship on this list — one partnership conversation could open a standing referral channel for all of Tritower's future raises.</p>
+      </div>
+      <div class="detail-section">
+        <h4>Suggested Opening Angle for Patrick</h4>
+        <div class="talking-point">
+          "Tom — Patrick Gorman from Tritower Financial. We structure single-asset commercial REITs — individual properties net-leased to Boeing, Pfizer, IBM — for accredited investors looking for real estate exposure without the complexity of direct ownership. Given F.L. Putnam's focus on alternatives and your family office clients, I think there's a natural fit. We've raised $577M since 2012 with a disciplined, property-by-property approach. I'd welcome a brief conversation about whether our deal flow could be a useful addition to what your advisors are already recommending. Happy to come to Lynnfield whenever convenient."
+        </div>
+        <div class="detail-links">
+          <a class="detail-link" href="mailto:tmanning@flputnam.com">✉ Draft Email</a>
+          <a class="detail-link" href="https://www.flputnam.com" target="_blank">🌐 F.L. Putnam Site</a>
+          <a class="detail-link" href="https://www.linkedin.com/in/tom-manning-4481678" target="_blank">in LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEAD 4 -->
+  <div class="lead-card" data-fit="strong" data-firm="flputnam" data-name="glen martin fl putnam">
+    <div class="card-main" onclick="toggleDetail(this)">
+      <div class="rank">4</div>
+      <div class="person-info">
+        <div class="person-name">Glen Martin</div>
+        <div class="person-title">Principal / MD, Client Advisory Services</div>
+        <div class="person-location">📍 F.L. Putnam, Lynnfield MA</div>
+      </div>
+      <div class="company-info">
+        <div class="company-name">F.L. Putnam Investment Management</div>
+        <div class="company-meta">6 Kimball Ln, Lynnfield, MA · $29.5M Revenue · 150 employees</div>
+        <div class="company-tags">
+          <span class="tag">Client-Facing</span>
+          <span class="tag">Principal</span>
+          <span class="tag">Alt Investments</span>
+        </div>
+      </div>
+      <div class="contact-info">
+        <div class="contact-row"><span class="contact-icon">✉</span> <a href="mailto:gmartin@flputnam.com">gmartin@flputnam.com</a></div>
+        <div class="contact-row"><span class="contact-icon">☎</span> +1 781-235-6323</div>
+        <div class="contact-row"><span class="contact-icon">in</span> <a href="https://www.linkedin.com/in/glenpmartin" target="_blank">LinkedIn</a></div>
+      </div>
+      <div class="fit-cell"><span class="fit-badge fit-strong">Strong Fit</span></div>
+      <div class="action-cell"><button class="expand-btn">View details ▾</button></div>
+    </div>
+    <div class="card-detail">
+      <div class="detail-section">
+        <h4>Why Glen is a Priority Target</h4>
+        <p>Glen is the Principal overseeing Client Advisory Services at F.L. Putnam — meaning he is directly responsible for the client experience and investment selection across the firm's advisory relationships. His title as "Managing Director of Client Advisory Services" puts him at the intersection of what clients want and what advisors recommend. If Patrick can show Glen how Tritower's offerings serve F.L. Putnam's HNW clients' real estate diversification goals, Glen becomes an internal champion who can influence how Tritower gets positioned to the entire advisor team.</p>
+      </div>
+      <div class="detail-section">
+        <h4>Suggested Opening Angle for Patrick</h4>
+        <div class="talking-point">
+          "Glen — I'm Patrick Gorman, Partner at Tritower Financial in Boston. We create single-asset commercial REIT investments for accredited investors — individual properties, Fortune 500 tenants, income-generating with tax advantages. I understand you oversee client advisory services at F.L. Putnam, and given the firm's appetite for alternatives, I'd love to share how a few of your peers at other North Shore RIAs have been using our deal flow to address the real estate allocation question for clients. Would a brief intro call be worthwhile?"
+        </div>
+        <div class="detail-links">
+          <a class="detail-link" href="mailto:gmartin@flputnam.com">✉ Draft Email</a>
+          <a class="detail-link" href="https://www.linkedin.com/in/glenpmartin" target="_blank">in LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEAD 5 -->
+  <div class="lead-card" data-fit="strong" data-firm="tqm" data-name="marcel quiroga tqm wealth partners marblehead">
+    <div class="card-main" onclick="toggleDetail(this)">
+      <div class="rank">5</div>
+      <div class="person-info">
+        <div class="person-name">Marcel V. Quiroga, RMA® CEPA®</div>
+        <div class="person-title">Founder & CEO</div>
+        <div class="person-location">📍 Marblehead, MA</div>
+      </div>
+      <div class="company-info">
+        <div class="company-name">TQM Wealth Partners</div>
+        <div class="company-meta">122 Washington St, Marblehead, MA · Est. 2016 · Growing (+20% headcount YoY)</div>
+        <div class="company-tags">
+          <span class="tag">Independent RIA</span>
+          <span class="tag">Founder-Led</span>
+          <span class="tag">Marblehead</span>
+          <span class="tag">Legacy Planning</span>
+        </div>
+      </div>
+      <div class="contact-info">
+        <div class="contact-row"><span class="contact-icon">✉</span> <a href="mailto:marcel@tqmwealthpartners.com">marcel@tqmwealthpartners.com</a></div>
+        <div class="contact-row"><span class="contact-icon">☎</span> +1 781-990-3599</div>
+        <div class="contact-row"><span class="contact-icon">in</span> <a href="https://www.linkedin.com/in/marcelquiroga" target="_blank">LinkedIn</a></div>
+      </div>
+      <div class="fit-cell"><span class="fit-badge fit-strong">Strong Fit</span></div>
+      <div class="action-cell"><button class="expand-btn">View details ▾</button></div>
+    </div>
+    <div class="card-detail">
+      <div class="detail-section">
+        <h4>Why Marcel is a Priority Target</h4>
+        <p>Marcel founded TQM Wealth Partners in Marblehead — one of the wealthiest zip codes on the North Shore — and positions the firm around "purpose-driven wealth management and legacy planning." That language signals clients who are thinking multigenerationally about wealth, which aligns strongly with the estate and tax planning advantages of Tritower's single-asset REIT structure. Marcel holds the CEPA (Certified Exit Planning Advisor) designation, meaning she works with business owners preparing for liquidity events — exactly the accredited investor profile that often has fresh capital looking for private real estate allocation. TQM has been growing 20% year over year.</p>
+      </div>
+      <div class="detail-section">
+        <h4>Suggested Opening Angle for Patrick</h4>
+        <div class="talking-point">
+          "Marcel — I'm Patrick Gorman from Tritower Financial. We create single-asset commercial REIT investments for accredited investors — tax-advantaged income from Fortune 500-tenanted properties, IRA-eligible in some structures. Given TQM's focus on legacy and purpose-driven wealth, and your work with business owners post-exit, I suspect you have clients sitting on liquidity who are actively looking for diversification outside public markets. I'd love to show you how two or three of your peers have been using our deal flow. Marblehead is not far from our Boston office — happy to meet in person."
+        </div>
+        <div class="detail-links">
+          <a class="detail-link" href="mailto:marcel@tqmwealthpartners.com">✉ Draft Email</a>
+          <a class="detail-link" href="https://www.tqmwealthpartners.com" target="_blank">🌐 TQM Website</a>
+          <a class="detail-link" href="https://www.linkedin.com/in/marcelquiroga" target="_blank">in LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEAD 6 -->
+  <div class="lead-card" data-fit="strong" data-firm="cabot" data-name="sonia ernst cabot wealth management">
+    <div class="card-main" onclick="toggleDetail(this)">
+      <div class="rank">6</div>
+      <div class="person-info">
+        <div class="person-name">Sonia Ernst</div>
+        <div class="person-title">Managing Partner</div>
+        <div class="person-location">📍 Salem, MA</div>
+      </div>
+      <div class="company-info">
+        <div class="company-name">Cabot Wealth Management</div>
+        <div class="company-meta">216 Essex St, Salem, MA · $17.2M Revenue · 30% equity principal</div>
+        <div class="company-tags">
+          <span class="tag">Managing Partner</span>
+          <span class="tag">Operations</span>
+          <span class="tag">North Shore</span>
+        </div>
+      </div>
+      <div class="contact-info">
+        <div class="contact-row"><span class="contact-icon">✉</span> <a href="mailto:sonia@ecabot.com">sonia@ecabot.com</a></div>
+        <div class="contact-row"><span class="contact-icon">☎</span> +1 978-745-9233</div>
+        <div class="contact-row"><span class="contact-icon">in</span> <a href="https://www.linkedin.com/in/sonia-ernst-b0b19439" target="_blank">LinkedIn</a></div>
+      </div>
+      <div class="fit-cell"><span class="fit-badge fit-strong">Strong Fit</span></div>
+      <div class="action-cell"><button class="expand-btn">View details ▾</button></div>
+    </div>
+    <div class="card-detail">
+      <div class="detail-section">
+        <h4>Why Sonia is a Priority Target</h4>
+        <p>Sonia is one of Cabot's three Managing Partners and a 30% equity owner in the firm. Her role spans operations and trading — which means she is involved in how outside investment vehicles get evaluated, approved, and introduced to advisors. If Patrick gets a warm conversation with either Greg or Jim, Sonia's buy-in is likely required before any Cabot advisor recommends a Tritower offering. She's best approached as a co-equal to Greg and Jim, not as an operational contact. Her equity stake means firm outcomes matter personally.</p>
+      </div>
+      <div class="detail-section">
+        <h4>Suggested Opening Angle for Patrick</h4>
+        <div class="talking-point">
+          "Sonia — Patrick Gorman, Tritower Financial. We're a Boston-based private real estate investment firm — single-asset commercial REITs, income-generating, accredited investor eligible. I've been connecting with a few RIAs on the North Shore about how our deal flow fits into comprehensive plans for clients who are equity-heavy and underexposed to real estate. Given your role at Cabot, I thought it was worth reaching out directly. Would a 20-minute call make sense?"
+        </div>
+        <div class="detail-links">
+          <a class="detail-link" href="mailto:sonia@ecabot.com">✉ Draft Email</a>
+          <a class="detail-link" href="https://www.linkedin.com/in/sonia-ernst-b0b19439" target="_blank">in LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEAD 7 -->
+  <div class="lead-card" data-fit="strong" data-firm="flputnam" data-name="joni stone fl putnam business development">
+    <div class="card-main" onclick="toggleDetail(this)">
+      <div class="rank">7</div>
+      <div class="person-info">
+        <div class="person-name">Joni Stone</div>
+        <div class="person-title">Principal, Director of Business Development</div>
+        <div class="person-location">📍 F.L. Putnam, Lynnfield MA</div>
+      </div>
+      <div class="company-info">
+        <div class="company-name">F.L. Putnam Investment Management</div>
+        <div class="company-meta">6 Kimball Ln, Lynnfield, MA · $29.5M Revenue · 150 employees</div>
+        <div class="company-tags">
+          <span class="tag">BD / Partnerships</span>
+          <span class="tag">Principal</span>
+          <span class="tag">Strategic Relationships</span>
+        </div>
+      </div>
+      <div class="contact-info">
+        <div class="contact-row"><span class="contact-icon">✉</span> <a href="mailto:jstone@flputnam.com">jstone@flputnam.com</a></div>
+        <div class="contact-row"><span class="contact-icon">☎</span> +1 781-235-6323</div>
+        <div class="contact-row"><span class="contact-icon">in</span> <a href="https://www.linkedin.com/in/joni-stone-480766147" target="_blank">LinkedIn</a></div>
+      </div>
+      <div class="fit-cell"><span class="fit-badge fit-strong">Strong Fit</span></div>
+      <div class="action-cell"><button class="expand-btn">View details ▾</button></div>
+    </div>
+    <div class="card-detail">
+      <div class="detail-section">
+        <h4>Why Joni is a Priority Target</h4>
+        <p>Joni is F.L. Putnam's Director of Business Development — and a Principal, which means she has both the relationships and the organizational authority to evaluate and onboard outside investment partnerships. Her job is literally to identify opportunities that make F.L. Putnam's client offering more competitive. Patrick approaching Joni with a partnership angle (rather than a sales angle) is the right framing: "Here's how adding Tritower to your alternatives platform could differentiate your advisors." If Joni sees the fit, she can introduce Patrick to Glen Martin and Tom Manning with internal credibility already established.</p>
+      </div>
+      <div class="detail-section">
+        <h4>Suggested Opening Angle for Patrick</h4>
+        <div class="talking-point">
+          "Joni — I lead capital formation at Tritower Financial, a Boston private real estate investment firm that structures single-asset commercial REITs for accredited investors. I've been speaking with business development leaders at a handful of North Shore RIAs about whether adding Tritower's deal flow to their alternatives offering creates value for their advisors and clients. Given F.L. Putnam's scale and your focus on building strategic relationships, I thought this might be worth a quick conversation. Would 20 minutes work?"
+        </div>
+        <div class="detail-links">
+          <a class="detail-link" href="mailto:jstone@flputnam.com">✉ Draft Email</a>
+          <a class="detail-link" href="https://www.linkedin.com/in/joni-stone-480766147" target="_blank">in LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEAD 8 -->
+  <div class="lead-card" data-fit="good" data-firm="cabot" data-name="tyler swaim cabot wealth advisor">
+    <div class="card-main" onclick="toggleDetail(this)">
+      <div class="rank">8</div>
+      <div class="person-info">
+        <div class="person-name">Tyler Swaim, ChFC® CRPC™</div>
+        <div class="person-title">Partner, Senior Wealth Advisor</div>
+        <div class="person-location">📍 Salem, MA</div>
+      </div>
+      <div class="company-info">
+        <div class="company-name">Cabot Wealth Management</div>
+        <div class="company-meta">216 Essex St, Salem, MA · 5% equity owner · Client-facing senior advisor</div>
+        <div class="company-tags">
+          <span class="tag">Partner</span>
+          <span class="tag">Client-Facing</span>
+          <span class="tag">Certified Retirement</span>
+        </div>
+      </div>
+      <div class="contact-info">
+        <div class="contact-row"><span class="contact-icon">✉</span> <a href="mailto:tyler@ecabot.com">tyler@ecabot.com</a></div>
+        <div class="contact-row"><span class="contact-icon">☎</span> +1 978-745-9233</div>
+        <div class="contact-row"><span class="contact-icon">in</span> <a href="https://www.linkedin.com/in/tyler-swaim-chfc%c2%ae-crpc%e2%84%a2-82b72b2b" target="_blank">LinkedIn</a></div>
+      </div>
+      <div class="fit-cell"><span class="fit-badge fit-good">Good Fit</span></div>
+      <div class="action-cell"><button class="expand-btn">View details ▾</button></div>
+    </div>
+    <div class="card-detail">
+      <div class="detail-section">
+        <h4>Why Tyler is a Good Target</h4>
+        <p>Tyler is a Partner and 5% equity owner at Cabot — a client-facing advisor who holds both the ChFC® (Chartered Financial Consultant) and CRPC™ (Chartered Retirement Planning Counselor) designations. The CRPC designation signals a focus on pre- and post-retirement income planning, which maps well to Tritower's income-generating, tax-advantaged real estate offering. Tyler manages direct client relationships and would be the person actually recommending a Tritower investment to an eligible client. Best approached after Patrick has established rapport with Greg or Jim.</p>
+      </div>
+      <div class="detail-section">
+        <h4>Suggested Opening Angle for Patrick</h4>
+        <div class="talking-point">
+          "Tyler — I'm Patrick Gorman from Tritower Financial. We invest in institutional-quality commercial real estate — single-asset REITs, Fortune 500 tenants, strong income yields — structured for accredited individual investors. Given your focus on retirement income planning at Cabot, I thought our offering might be worth a look: tax-sheltered distributions, potential IRA eligibility, and real estate exposure without direct management. Happy to walk you through a current deal if you have 15 minutes."
+        </div>
+        <div class="detail-links">
+          <a class="detail-link" href="mailto:tyler@ecabot.com">✉ Draft Email</a>
+          <a class="detail-link" href="https://www.linkedin.com/in/tyler-swaim-chfc%c2%ae-crpc%e2%84%a2-82b72b2b" target="_blank">in LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEAD 9 -->
+  <div class="lead-card" data-fit="good" data-firm="flputnam" data-name="thomas fay fl putnam private client group">
+    <div class="card-main" onclick="toggleDetail(this)">
+      <div class="rank">9</div>
+      <div class="person-info">
+        <div class="person-name">Thomas Fay, CFA</div>
+        <div class="person-title">Principal, Head of Private Client Group</div>
+        <div class="person-location">📍 F.L. Putnam (RI/MA region)</div>
+      </div>
+      <div class="company-info">
+        <div class="company-name">F.L. Putnam Investment Management</div>
+        <div class="company-meta">6 Kimball Ln, Lynnfield, MA · $29.5M Revenue · Joined 2019 from BNY Mellon</div>
+        <div class="company-tags">
+          <span class="tag">Private Clients</span>
+          <span class="tag">Principal</span>
+          <span class="tag">CFA</span>
+          <span class="tag">BNY Mellon Background</span>
+        </div>
+      </div>
+      <div class="contact-info">
+        <div class="contact-row"><span class="contact-icon">✉</span> <a href="mailto:tfay@flputnam.com">tfay@flputnam.com</a></div>
+        <div class="contact-row"><span class="contact-icon">☎</span> +1 781-235-6323</div>
+        <div class="contact-row"><span class="contact-icon">in</span> <a href="https://www.linkedin.com/in/thomas-p-fay-59256b39" target="_blank">LinkedIn</a></div>
+      </div>
+      <div class="fit-cell"><span class="fit-badge fit-good">Good Fit</span></div>
+      <div class="action-cell"><button class="expand-btn">View details ▾</button></div>
+    </div>
+    <div class="card-detail">
+      <div class="detail-section">
+        <h4>Why Thomas is a Good Target</h4>
+        <p>Thomas Fay is Head of the Private Client Group at F.L. Putnam — which is the division most likely to have clients who qualify as accredited investors and are actively seeking private real estate exposure. His background as CIO and Head of Private Bank & Trust at Citizens Bank, followed by a long tenure at BNY Mellon, means he comes from institutional private banking culture and understands complex product structures. The Private Client Group at a $29.5M RIA likely manages significant wealth for North Shore families and individuals. Worth approaching directly, but also a great warm intro target if Patrick connects with Tom Manning first.</p>
+      </div>
+      <div class="detail-section">
+        <h4>Suggested Opening Angle for Patrick</h4>
+        <div class="talking-point">
+          "Thomas — Patrick Gorman from Tritower Financial. We structure single-asset commercial REIT investments — net-leased to Boeing, Pfizer, Fidelity — for accredited investors looking for institutional-quality real estate without direct ownership. Given your private banking background and your role leading F.L. Putnam's Private Client Group, I think there's a natural conversation about whether our deal flow fits clients who are equity-heavy and looking for income-generating alternatives. Happy to connect whenever you have 20 minutes."
+        </div>
+        <div class="detail-links">
+          <a class="detail-link" href="mailto:tfay@flputnam.com">✉ Draft Email</a>
+          <a class="detail-link" href="https://www.linkedin.com/in/thomas-p-fay-59256b39" target="_blank">in LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEAD 10 -->
+  <div class="lead-card" data-fit="good" data-firm="cabot" data-name="craig goryl cabot cio portfolio manager">
+    <div class="card-main" onclick="toggleDetail(this)">
+      <div class="rank">10</div>
+      <div class="person-info">
+        <div class="person-name">Craig Goryl</div>
+        <div class="person-title">Chief Investment Officer & Senior Portfolio Manager</div>
+        <div class="person-location">📍 Cabot Wealth, Salem MA</div>
+      </div>
+      <div class="company-info">
+        <div class="company-name">Cabot Wealth Management</div>
+        <div class="company-meta">216 Essex St, Salem, MA · $17.2M Revenue · Investment leadership role</div>
+        <div class="company-tags">
+          <span class="tag">CIO</span>
+          <span class="tag">Portfolio Mgmt</span>
+          <span class="tag">Investment Strategy</span>
+        </div>
+      </div>
+      <div class="contact-info">
+        <div class="contact-row"><span class="contact-icon">✉</span> <a href="mailto:craig@ecabot.com">craig@ecabot.com</a></div>
+        <div class="contact-row"><span class="contact-icon">☎</span> +1 978-745-9233</div>
+        <div class="contact-row"><span class="contact-icon">in</span> <a href="https://www.linkedin.com/in/cgoryl" target="_blank">LinkedIn</a></div>
+      </div>
+      <div class="fit-cell"><span class="fit-badge fit-good">Good Fit</span></div>
+      <div class="action-cell"><button class="expand-btn">View details ▾</button></div>
+    </div>
+    <div class="card-detail">
+      <div class="detail-section">
+        <h4>Why Craig is a Good Target</h4>
+        <p>Craig is Cabot's CIO and Senior Portfolio Manager — the person who decides what goes into client portfolios. While Craig is less client-facing than Greg, Jim, or Tyler, any outside investment product that Cabot's advisors recommend likely passes through Craig's investment committee review first. Getting Craig intellectually interested in Tritower's structure — the low correlation to public markets, the long-term NNN lease stability, the income characteristics — could accelerate adoption across the entire Cabot advisor team. Best approach: a product conversation, not a sales call.</p>
+      </div>
+      <div class="detail-section">
+        <h4>Suggested Opening Angle for Patrick</h4>
+        <div class="talking-point">
+          "Craig — I'm Patrick Gorman from Tritower Financial. We structure single-asset commercial REIT investments — individual properties, NNN leases, Fortune 500 tenants — for accredited investors. I know CIOs get pitched constantly, so I'll be brief: our investments have low correlation to public equities, generate income through long-term fixed leases, and provide real estate exposure without the liquidity premium you'd pay in a REIT ETF. I think it's worth 20 minutes to walk through the structure. Would you be open to a call?"
+        </div>
+        <div class="detail-links">
+          <a class="detail-link" href="mailto:craig@ecabot.com">✉ Draft Email</a>
+          <a class="detail-link" href="https://www.linkedin.com/in/cgoryl" target="_blank">in LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end leads-grid -->
+</div><!-- end main -->
+
+<div class="footer">
+  Fructify Solutions · Prepared for Patrick M. Gorman, Jr. — Tritower Financial Group · March 2026<br>
+  All emails verified via Apollo.io · Contact: <a href="mailto:smilbury@fructifyme.com">smilbury@fructifyme.com</a>
+</div>
+
+<script>
+  function toggleDetail(cardMain) {
+    const detail = cardMain.nextElementSibling;
+    const btn = cardMain.querySelector('.expand-btn');
+    if (detail.classList.contains('open')) {
+      detail.classList.remove('open');
+      btn.textContent = 'View details ▾';
+    } else {
+      detail.classList.add('open');
+      btn.textContent = 'Close ▴';
+    }
+  }
+
+  function filterLeads(type, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.lead-card').forEach(card => {
+      if (type === 'all') card.classList.remove('hidden');
+      else if (type === 'strong') card.classList.toggle('hidden', card.dataset.fit !== 'strong');
+      else card.classList.toggle('hidden', card.dataset.firm !== type);
+    });
+  }
+
+  function searchLeads(query) {
+    const q = query.toLowerCase();
+    document.querySelectorAll('.lead-card').forEach(card => {
+      card.classList.toggle('hidden', q.length > 0 && !card.dataset.name.includes(q));
+    });
+  }
+</script>
+</body>
+</html>
